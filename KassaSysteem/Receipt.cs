@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace KassaSysteem
@@ -7,11 +8,10 @@ namespace KassaSysteem
     public class Receipt
     {
         private Dictionary<Product, int> productOnReceipt = new Dictionary<Product, int>();
-        private PaymentMethod usedPaymentMethod;
+        private PaymentMethod usedPaymentMethod = PaymentMethod.Cash;
 
-        public Receipt(PaymentMethod usedPaymentMethod)
+        public Receipt()
         {
-            this.usedPaymentMethod = usedPaymentMethod;
         }
 
         //TODO change
@@ -32,7 +32,7 @@ namespace KassaSysteem
 
         }
 
-        //TODO change
+        //TODO change + calculate sales
         /// <summary>
         /// Calculates price based on the items inside the dictionary
         /// </summary>
@@ -42,9 +42,19 @@ namespace KassaSysteem
             return PriceFromDictionary;
         }
 
+        public void SetPaymentMethod(PaymentMethod method)
+        {
+            this.usedPaymentMethod = method;
+        }
+
         public PaymentMethod GetPaymentMethod()
         {
             return this.usedPaymentMethod;
+        }
+
+        public Dictionary<Product, int> GetProducts()
+        {
+            return this.productOnReceipt;
         }
     }
 }

@@ -32,6 +32,7 @@ namespace KassaSysteem
             this.receipts = new List<Receipt>();
             this.stock = new Stock();
             this.moneyAmountRegister = startamount;
+            this.currentReceipt = new Receipt();
         }
 
         /// <summary>
@@ -39,9 +40,9 @@ namespace KassaSysteem
         /// </summary>
         /// <param name="id">Id string.</param>
         /// <returns>A Product.</returns>
-        public Product GetProduct(string id)
+        public Product GetProduct(int id)
         {
-            return null; // TODO return Product class from stock (add method to stock?).
+            return this.stock.GetProduct(id);
         }
 
         /// <summary>
@@ -50,8 +51,8 @@ namespace KassaSysteem
         /// <param name="product">Product to check.</param>
         public bool CheckStock(Product product)
         {
-            // TODO check stock (add method to stock?)
-            return false;
+            // stock > 0? is in stock
+            return stock.GetItemAmount(product) > 0;
         }
 
         /// <summary>
@@ -61,7 +62,15 @@ namespace KassaSysteem
         /// <param name="amount">Amount of money paid.</param>
         public bool Pay(PaymentMethod method, double amount)
         {
-            return true; // TODO actually pay.
+            if (!this.allowedCards.Contains(method) || amount < this.GetSubTotal())
+                return false;
+
+            this.currentReceipt.SetPaymentMethod(method);
+            this.PrintReceipt();
+            this.receipts.Add(this.currentReceipt);
+
+            this.currentReceipt = new Receipt();
+            return true;
         }
 
         /// <summary>
@@ -70,7 +79,7 @@ namespace KassaSysteem
         /// <param name="product">Product to add.</param>
         public void AddToReceipt(Product product)
         {
-
+            this.currentReceipt.AddProduct(product);
         }
 
         /// <summary>
@@ -80,7 +89,16 @@ namespace KassaSysteem
         {
             // TODO print receipt from this.currentReceipt;
             Console.WriteLine($" ----------------------");
-            Console.WriteLine($"Date: {DateTime.Now}");
+            Console.WriteLine($"Date: {DateTime.Now}\n");
+            foreach(var keyvalue in currentReceipt.GetProducts())
+            {
+                for(int i = 0; i < keyvalue.Value; i++)
+                {
+                    Console.WriteLine($"{keyvalue.Key.GetProductName()}: {keyvalue.Key.GetPrice()}");
+                }
+            }
+            Console.WriteLine($"\n\nTotal: {currentReceipt.GetPriceTotal()}");
+            Console.WriteLine($"Payment method: {Enum.GetName(typeof(PaymentMethod), currentReceipt.GetPaymentMethod())}");
             Console.WriteLine($" ---------------------- ");
         }
 
