@@ -1,12 +1,18 @@
 ﻿using System;
+using System.Reflection;
 
 namespace KassaSysteem
 {
     class Program
     {
+        static Register register;
+
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine($"Register system.");
+
+            // Entry into program.
+            register = new Register(500);
         }
     }
 }
