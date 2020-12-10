@@ -9,15 +9,23 @@ namespace KassaSysteem
         private int productId;
         private string productName;
         private double price;
-        private float sale;
+        private double sale;
 
+        public Product(int productId, string productName, double price, double sale)
+        {
+            this.productId = productId;
+            this.productName = productName;
+            this.price = price;
+            this.sale = sale;
+        }
+            
         /// <summary>
         /// Retrieves id of the product.
         /// </summary>
         /// <returns></returns>
         public int GetProductId()
         {
-            return 0;
+            return this.productId;
         }
 
         /// <summary>
@@ -26,7 +34,7 @@ namespace KassaSysteem
         /// <param name="id"></param>
         public void SetProductId(int id)
         {
-
+            this.productId = id;
         }
 
         /// <summary>
@@ -35,7 +43,7 @@ namespace KassaSysteem
         /// <returns></returns>
         public string GetProductName()
         {
-            return null;
+            return productName;
         }
 
         /// <summary>
@@ -44,7 +52,7 @@ namespace KassaSysteem
         /// <param name="name"></param>
         public void SetProductName(string name)
         {
-
+            this.productName = name;
         }
 
         /// <summary>
@@ -53,7 +61,7 @@ namespace KassaSysteem
         /// <returns></returns>
         public double GetPrice()
         {
-            return 0;
+            return this.price;
         }
 
         /// <summary>
@@ -62,7 +70,7 @@ namespace KassaSysteem
         /// <param name="price"></param>
         public void SetPrice(double price)
         {
-
+            this.price = price;
         }
 
         /// <summary>
@@ -71,7 +79,7 @@ namespace KassaSysteem
         /// <returns></returns>
         public double GetSale()
         {
-            return 0;
+            return this.sale;
         }
 
         /// <summary>
@@ -80,7 +88,7 @@ namespace KassaSysteem
         /// <param name="saleAmount"></param>
         public void SetSale(double saleAmount)
         {
-
+            this.sale = saleAmount;
         }
     }
 }
