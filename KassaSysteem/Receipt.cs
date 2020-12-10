@@ -6,7 +6,7 @@ namespace KassaSysteem
 {
     public class Receipt
     {
-        private Dictionary<int, Product> productOnReceipt = new Dictionary<int, Product>();
+        private Dictionary<Product, int> productOnReceipt = new Dictionary<Product, int>();
         private PaymentMethod usedPaymentMethod;
 
         public Receipt(PaymentMethod usedPaymentMethod)

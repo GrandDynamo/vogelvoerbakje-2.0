@@ -6,16 +6,16 @@ namespace KassaSysteem
 {
     public class Stock
     {
-        private Dictionary<int, Product> productsInStock = new Dictionary<int, Product>();
+        private Dictionary<Product, int> productsInStock = new Dictionary<Product, int>();
 
         public void AddItem(Product product)
         {
-            productsInStock.Add(1, product);
+            productsInStock.Add(product, 1);
         }
 
         public void RemoveItem(Product product)
         {
-            productsInStock.Remove(1, out product);
+    
         }
     }
 }
