@@ -15,6 +15,8 @@ namespace KassaSysteem
 
         private List<Receipt> receipts;
 
+        private double startAmountRegister;
+
         private double moneyAmountRegister;
 
         private Stock stock;
@@ -31,6 +33,7 @@ namespace KassaSysteem
             this.sales = new List<Sale>();
             this.receipts = new List<Receipt>();
             this.stock = new Stock();
+            this.startAmountRegister = startamount;
             this.moneyAmountRegister = startamount;
             this.currentReceipt = new Receipt();
         }
@@ -147,8 +150,9 @@ namespace KassaSysteem
         /// <returns>Profit margin.</returns>
         public double GetProfitMargin()
         {
-            // TODO
-            return 0;
+            double profitMargin = moneyAmountRegister - startAmountRegister;
+
+            return profitMargin;
         }
 
         /// <summary>
@@ -156,7 +160,7 @@ namespace KassaSysteem
         /// </summary>
         public void PrintAllSoldProductFromReceipts()
         {
-            //TODO yada yada
+            //TODO
         }
 
         /// <summary>
