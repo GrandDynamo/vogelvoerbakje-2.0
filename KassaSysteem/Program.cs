@@ -12,7 +12,7 @@ namespace KassaSysteem
             Console.WriteLine($"Register system.");
 
             // Entry into program.
-            register = new Register(500);
+            register = Register.DeserializeFromDisk();
         }
     }
 }

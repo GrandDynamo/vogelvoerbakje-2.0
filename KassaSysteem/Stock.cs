@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ namespace KassaSysteem
 {
     public class Stock
     {
+        [JsonProperty]
         private Dictionary<Product, int> productsInStock = new Dictionary<Product, int>();
 
         public void AddItem(Product product)

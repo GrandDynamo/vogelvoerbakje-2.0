@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace KassaSysteem
@@ -9,18 +11,25 @@ namespace KassaSysteem
     /// </summary>
     public class Register
     {
+        [JsonProperty]
         private List<PaymentMethod> allowedCards;
 
+        [JsonProperty]
         private List<Sale> sales;
 
+        [JsonProperty]
         private List<Receipt> receipts;
 
+        [JsonProperty]
         private double startAmountRegister;
 
+        [JsonProperty]
         private double moneyAmountRegister;
 
+        [JsonProperty]
         private Stock stock;
 
+        [JsonIgnore]
         private Receipt currentReceipt;
 
         /// <summary>
@@ -179,6 +188,37 @@ namespace KassaSysteem
         public void SetRegisterAmount(double value)
         {
             this.moneyAmountRegister = value;
+        }
+
+        /// <summary>
+        /// Serializes this register to disk. (register.json)
+        /// </summary>
+        public void SerializeToDisk()
+        {
+            if (!File.Exists("register.json"))
+                File.Create("register.json").Close();
+
+            File.WriteAllText("register.json", JsonConvert.SerializeObject(this, Formatting.Indented));
+        }
+
+        /// <summary>
+        /// Deserializes a register from disk (and creates a new one if it doesn't exist). (register.json)
+        /// </summary>
+        /// <returns></returns>
+        public static Register DeserializeFromDisk()
+        {
+            if (!File.Exists("register.json"))
+            {
+                var newregister = new Register(500);
+
+                // TODO create test register
+
+                File.Create("register.json").Close();
+                File.WriteAllText("register.json", JsonConvert.SerializeObject(newregister, Formatting.Indented));
+                return newregister;
+            }
+
+            return (Register)JsonConvert.DeserializeObject(File.ReadAllText("register.json"));
         }
     }
 }

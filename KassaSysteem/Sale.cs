@@ -1,12 +1,19 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace KassaSysteem
 {
+    /// <summary>
+    /// Represents one price for a combination of products (instead of having their own prices).
+    /// </summary>
     public class Sale
     {
+        [JsonProperty]
         List<Product> productTypes = new List<Product>();
+
+        [JsonProperty]
         private double PriceSale;
 
         public Sale(double PriceSale)
