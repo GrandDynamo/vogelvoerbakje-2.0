@@ -47,6 +47,9 @@ namespace KassaSysteem
 
                 switch (cmd)
                 {
+                    case "listsold":
+                        register.PrintAllSoldProductFromReceipts();
+                        break;
                     case "q":
                     case "quit":
                     case "exit":
