@@ -49,7 +49,6 @@ namespace KassaSysteem
         /// <param name="product">Product to check.</param>
         public bool CheckStock(Product product)
         {
-            // stock > 0? is in stock
             return stock.GetItemAmount(product) > 0;
         }
 
@@ -84,8 +83,7 @@ namespace KassaSysteem
         /// Prints a receipt.
         /// </summary>
         public void PrintReceipt()
-        {
-            // TODO print receipt from this.currentReceipt;
+        {         
             Console.WriteLine($" ----------------------");
             Console.WriteLine($"Date: {DateTime.Now}\n");
             foreach(var keyvalue in currentReceipt.GetProducts())
@@ -155,7 +153,27 @@ namespace KassaSysteem
         /// </summary>
         public void PrintAllSoldProductFromReceipts()
         {
-            //TODO
+            Dictionary<Product, int> productKey = new Dictionary<Product, int>();
+
+            foreach (Receipt item in this.receipts)
+            {
+                foreach(var value in item.GetProducts())
+                {
+                    if (!productKey.ContainsKey(value.Key))
+                    {
+                        productKey.Add(value.Key, value.Value);
+                    }
+                    else
+                    {
+                        productKey[value.Key] += value.Value;
+                    }
+                }
+            }
+
+            foreach(var product in productKey)
+            {
+                Console.WriteLine($"{product.Key} --- {product.Value}" );
+            }
         }
 
         /// <summary>
