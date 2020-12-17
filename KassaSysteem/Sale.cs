@@ -32,12 +32,9 @@ namespace KassaSysteem
             productTypes.Remove(product);
         }
 
-        public void GetAllItemFromList()
+        public List<Product> GetAllItemFromList()
         {
-            foreach(Product item in productTypes)
-            {
-                Console.WriteLine(item.GetProductName());
-            }
+            return this.productTypes;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -141,12 +142,11 @@ namespace KassaSysteem
         /// <summary>
         /// Refunds a receipt.
         /// </summary>
-        /// <param name="receipt">Receipt to refund.</param>
         /// <param name="product">Product to refund.</param>
-        public double Refund(Receipt receipt, Product product)
+        public double Refund(/*Receipt receipt,*/Product product)
         {
             // Remove product from receipt, return amount of money to give back.
-            receipt.RemoveProduct(product);
+            //receipt.RemoveProduct(product);
             return product.GetPrice();
         }
 
@@ -205,6 +205,11 @@ namespace KassaSysteem
         public void SetRegisterAmount(double value)
         {
             this.moneyAmountRegister = value;
+        }
+
+        public ReadOnlyCollection<Sale> GetSales()
+        {
+            return this.sales.AsReadOnly();
         }
         
         ///// <summary>
