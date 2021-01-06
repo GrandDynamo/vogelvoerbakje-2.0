@@ -11,7 +11,6 @@ namespace KassaSysteem
     {
         MasterCard,
         Maestro,
-        FakeMasterCard,
         Visa,
         Cash,
         DebitCard

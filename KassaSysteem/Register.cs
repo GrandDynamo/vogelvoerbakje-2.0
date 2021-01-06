@@ -82,6 +82,25 @@ namespace KassaSysteem
         }
 
         /// <summary>
+        /// Pays the current receipt.
+        /// </summary>
+        /// <param name="method">Method to pay with.</param>
+        /// <param name="amount">Amount of money paid.</param>
+        public bool Pay(PaymentMethod method, double amount)
+        {
+            if (!this.paymentMethods.Contains(method) || amount < this.GetSubTotal())
+                return false;
+
+
+            this.currentReceipt.SetPaymentMethod(method);
+            this.PrintReceipt();
+            this.receipts.Add(this.currentReceipt);
+
+            this.currentReceipt = new Receipt();
+            return true;
+        }
+
+        /// <summary>
         /// Adds a product to a receipt.
         /// </summary>
         /// <param name="product">Product to add.</param>
@@ -247,40 +266,12 @@ namespace KassaSysteem
 
         public void PrintPaymentMethods()
         {
-            Console.WriteLine("Accepted payment methods:");
+            Console.WriteLine("Accepted payment methods:\n");
             foreach (PaymentMethod paymentMethod in GetPaymentMethods())
             {
-                Console.WriteLine($"{paymentMethod}");
+                Console.WriteLine($"- {paymentMethod}");
             }
+            Console.WriteLine("");
         }
-        
-        ///// <summary>
-        ///// Serializes this register to disk. (register.json)
-        ///// </summary>
-        //public void SerializeToDisk()
-        //{
-        //    if (!File.Exists("register.json"))
-        //        File.Create("register.json").Close();
-
-        //    File.WriteAllText("register.json", JsonConvert.SerializeObject(this, Formatting.Indented));
-        //}
-
-        ///// <summary>
-        ///// Deserializes a register from disk (and creates a new one if it doesn't exist). (register.json)
-        ///// </summary>
-        ///// <returns></returns>
-        //public static Register DeserializeFromDisk()
-        //{
-        //    if (!File.Exists("register.json"))
-        //    {
-
-
-        //        File.Create("register.json").Close();
-        //        File.WriteAllText("register.json", JsonConvert.SerializeObject(newregister, Formatting.Indented));
-        //        return newregister;
-        //    }
-
-        //    return (Register)JsonConvert.DeserializeObject(File.ReadAllText("register.json"));
-        //}
     }
 }
