@@ -12,7 +12,7 @@ namespace KassaSysteem
     /// </summary>
     public class Register
     {
-        private List<PaymentMethod> allowedCards;
+        private List<PaymentMethod> paymentMethods;
         private List<Sale> sales;
         private List<Receipt> receipts;
         private double startAmountRegister;
@@ -26,7 +26,7 @@ namespace KassaSysteem
         /// <param name="startamount">amount of cash to start with.</param>
         public Register(double startamount, Stock stock)
         {
-            this.allowedCards = new List<PaymentMethod>();
+            this.paymentMethods = new List<PaymentMethod>();
             this.sales = new List<Sale>();
             this.receipts = new List<Receipt>();
             this.stock = stock;
@@ -37,8 +37,8 @@ namespace KassaSysteem
 
         public void AddAllowedCard(PaymentMethod method)
         {
-            if(!this.allowedCards.Contains(method))
-                this.allowedCards.Add(method);
+            if(!this.paymentMethods.Contains(method))
+                this.paymentMethods.Add(method);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace KassaSysteem
         public bool Pay(PaymentMethod method, double amount, out double change)
         {
             change = amount;
-            if (!this.allowedCards.Contains(method) || amount < this.GetSubTotal())
+            if (!this.paymentMethods.Contains(method) || amount < this.GetSubTotal())
                 return false;
 
             change = amount - this.GetSubTotal();
@@ -111,6 +111,27 @@ namespace KassaSysteem
             Console.WriteLine($"Change: {change.ToString("c", new NumberFormatInfo() { CurrencySymbol = "EUR " })}");
             Console.WriteLine($" -------------------------------------");
         }
+
+        /// <summary>
+        /// Prints a receipt without change.
+        /// </summary>
+        public void PrintReceipt()
+        {
+            // TODO print receipt from this.currentReceipt;
+            Console.WriteLine($" -------------------------------------");
+            Console.WriteLine($"Date: {DateTime.Now}\n");
+            foreach (var keyvalue in currentReceipt.GetProducts())
+            {
+                for (int i = 0; i < keyvalue.Value; i++)
+                {
+                    string product = $"{keyvalue.Key.GetProductName()}:".PadRight(25);
+                    Console.WriteLine($"{product}{keyvalue.Key.GetPrice().ToString("c", new NumberFormatInfo() { CurrencySymbol = "EUR " })}");
+                }
+            }
+            Console.WriteLine($"\n\nTotal: {currentReceipt.GetPriceTotal().ToString("c", new NumberFormatInfo() { CurrencySymbol = "EUR " })}");
+            Console.WriteLine($" -------------------------------------");
+        }
+
 
         /// <summary>
         /// Adds a sale to this Register.
@@ -183,6 +204,13 @@ namespace KassaSysteem
                 }
             }
 
+            //No items were sold when productkey is empty.
+            if (productKey.Count < 1)
+            {
+                Console.WriteLine($"No items sold.");
+                return;
+            }
+
             foreach(var product in productKey)
             {
                 Console.WriteLine($"{product.Key} --- {product.Value}" );
@@ -210,6 +238,20 @@ namespace KassaSysteem
         public ReadOnlyCollection<Sale> GetSales()
         {
             return this.sales.AsReadOnly();
+        }
+
+        public List<PaymentMethod> GetPaymentMethods()
+        {
+            return paymentMethods;
+        }
+
+        public void PrintPaymentMethods()
+        {
+            Console.WriteLine("Accepted payment methods:");
+            foreach (PaymentMethod paymentMethod in GetPaymentMethods())
+            {
+                Console.WriteLine($"{paymentMethod}");
+            }
         }
         
         ///// <summary>

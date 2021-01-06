@@ -13,6 +13,7 @@ namespace KassaSysteem
         Maestro,
         FakeMasterCard,
         Visa,
-        Cash
+        Cash,
+        DebitCard
     }
 }
