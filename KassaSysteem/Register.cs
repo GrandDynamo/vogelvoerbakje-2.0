@@ -43,8 +43,8 @@ namespace KassaSysteem
 
         public void RemoveAllowedCard(PaymentMethod method)
         {
-            if (!this.paymentMethods.Contains(method))
-                this.paymentMethods.Remove(method);
+            if (this.paymentMethods.Contains(method)) 
+                this.paymentMethods.Remove(method);        
         }
 
         /// <summary>
