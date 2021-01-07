@@ -11,7 +11,7 @@ namespace KassaSysteem
         static Register register;
         static bool quit = false;
         static String password = "1234";
-
+		
         static void Main(string[] args)
         {
             // Making sure color is correct
@@ -207,7 +207,7 @@ namespace KassaSysteem
                             {
                                 if (register.GetPaymentMethods().Any(e => e.ToString().ToLower().Equals(cmdargs[0].ToLower())))
                                 {
-                                    if (cmdargs[0] == nameof(PaymentMethod.Cash).ToLower())
+                                    if (cmdargs[0].ToLower() == nameof(PaymentMethod.Cash).ToLower())
                                     {
                                         Console.WriteLine("Specify the amount of cash.");
                                         break;
