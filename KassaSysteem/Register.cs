@@ -273,5 +273,16 @@ namespace KassaSysteem
             }
             Console.WriteLine("");
         }
+
+        public void PrintPaymentCompatible()
+        {
+
+            Console.WriteLine("Compatible payment methods:\n");
+            foreach (PaymentMethod paymentMethod in Enum.GetValues(typeof(PaymentMethod)))
+            {
+                Console.WriteLine($"- {paymentMethod}");
+            }
+            Console.WriteLine("");
+        }
     }
 }
