@@ -10,7 +10,8 @@ namespace KassaSysteem
     {
         static Register register;
         static bool quit = false;
-
+        static String password = "1234";
+		
         static void Main(string[] args)
         {
             // Making sure color is correct
@@ -91,7 +92,12 @@ namespace KassaSysteem
                             $"\n    pay [amount] cash: pays, prints receipts and starts a new receipt." +
                             $"\n    pay [card]: pays, prints receipts and starts a new receipt." +
                             $"\n    listsold: prints the sold items." +
-                            $"\n    acceptedpayments: prints the payment typed that can be used to pay."
+                            $"\n    acceptedpayments: prints the payment typed that can be used to pay." +
+                            $"\n    " +
+                            $"\nRestricted acces:" +
+                            $"\n    compatiblepayments: prints the payment typed that are compatible with the system." +
+                            $"\n    addpaymentmethod [method]: adds a compatible payment methods to the acceptedpayments." +
+                            $"\n    removepaymentmethod [method]: removes a compatible payment methods from the acceptedpayments."
                             );
                         break;
                     case "listsold":
@@ -231,6 +237,61 @@ namespace KassaSysteem
                         else if (cmd.StartsWith("acceptedpayments"))
                         {
                             register.PrintPaymentMethods();
+                        }
+                        else if (cmd.StartsWith("compatiblepayments"))
+                        {
+                            Console.WriteLine("Insert password:\n");
+                            String input = "";
+                            while (input != password)
+                            {
+                                input = Console.ReadLine();
+                            }
+                            register.PrintPaymentCompatible();
+                        }
+                        else if (cmd.StartsWith("addpaymentmethod"))
+                        {
+                            Console.WriteLine("Insert password:\n");
+                            String input = "";
+                            while (input != password)
+                            {
+                                input = Console.ReadLine();
+                            }
+
+                            var cmdargs = cmd.Substring(4).Split(' ');
+                            if (cmdargs.Length == 2)
+                            {
+                                Console.WriteLine(cmdargs[1]);
+
+                                try
+                                {
+                                    register.AddAllowedCard((PaymentMethod)Enum.Parse(typeof(PaymentMethod), cmdargs[1]));
+                                }
+                                catch (Exception)
+                                {
+                                    Console.WriteLine("Invalid payment method");
+                                    break;
+                                }                  
+                            }
+                        }
+                        else if (cmd.StartsWith("removepaymentmethod"))
+                        {
+                            Console.WriteLine("Insert password:\n");
+                            String input = "";
+                            while (input != password)
+                            {
+                                input = Console.ReadLine();
+                            }
+
+                            var cmdargs = cmd.Substring(4).Split(' ');
+                            if (cmdargs.Length == 2)
+                            {
+                                if (cmdargs[1] != nameof(PaymentMethod).ToLower())
+                                {
+                                    Console.WriteLine("Invalid payment method");
+                                    break;
+                                }
+                                register.RemoveAllowedCard((PaymentMethod)Enum.Parse(typeof(PaymentMethod), cmdargs[1]));
+                            }
                         }
                         else
                         {

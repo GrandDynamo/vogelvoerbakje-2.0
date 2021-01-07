@@ -41,6 +41,12 @@ namespace KassaSysteem
                 this.paymentMethods.Add(method);
         }
 
+        public void RemoveAllowedCard(PaymentMethod method)
+        {
+            if (this.paymentMethods.Contains(method)) 
+                this.paymentMethods.Remove(method);        
+        }
+
         /// <summary>
         /// Gets a product by Id.
         /// </summary>
@@ -268,6 +274,16 @@ namespace KassaSysteem
         {
             Console.WriteLine("Accepted payment methods:\n");
             foreach (PaymentMethod paymentMethod in GetPaymentMethods())
+            {
+                Console.WriteLine($"- {paymentMethod}");
+            }
+            Console.WriteLine("");
+        }
+
+        public void PrintPaymentCompatible()
+        {
+            Console.WriteLine("Compatible payment methods:\n");
+            foreach (PaymentMethod paymentMethod in Enum.GetValues(typeof(PaymentMethod)))
             {
                 Console.WriteLine($"- {paymentMethod}");
             }
